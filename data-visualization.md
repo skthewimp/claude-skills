@@ -22,7 +22,9 @@ Tufte-inspired warm minimalist aesthetic rooted in R/ggplot2. The canonical styl
 - Remove top/right spines. Thin remaining lines (0.2-0.3)
 - Bold axis text, bold facet labels, bold title
 - Subtitle in #5f3946, smaller than title
-- NO legends - direct label on data. If unavoidable, bottom with no title
+- NO legends - direct label on data. If unavoidable, OUTSIDE the plot (below), no frame, no title
+- NEVER place a legend inside the plot area - this is chart junk
+- Font: Helvetica Neue / Helvetica / Arial. Never matplotlib's DejaVu Sans
 - Remove x-axis title when obvious
 - Facets: reorder by metric (never alphabetical), free scales
 - Maximize data-ink ratio. Every mark must encode data
@@ -62,6 +64,9 @@ theme_karthik = (
 
 matplotlib fallback (only when plotnine can't handle the chart):
 ```python
+import matplotlib as mpl
+mpl.rcParams['font.sans-serif'] = ['Helvetica Neue', 'Helvetica', 'Arial']
+
 fig.patch.set_facecolor('#e5e1d8')
 ax.set_facecolor('#e5e1d8')
 ax.spines['top'].set_visible(False)
@@ -74,6 +79,7 @@ ax.tick_params(colors='#3C3C3C', labelsize=9)
 for label in ax.get_xticklabels() + ax.get_yticklabels():
     label.set_fontweight('bold')
 ax.grid(False)
+# No legend inside plot. If needed: outside, below, no frame.
 plt.savefig('output.png', dpi=150, facecolor='#e5e1d8')
 ```
 
